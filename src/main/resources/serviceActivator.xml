@@ -31,7 +31,7 @@
     <int:service-activator input-channel="processingChannel"
                            output-channel="fileOutputChannel"
                            ref="accountService"
-                           method="processAccount"/>
+                           method="myService"/>
 
     <!-- Bean definition for the service activator's referenced service -->
     <bean id="accountService" class="test.AccountService"/>
