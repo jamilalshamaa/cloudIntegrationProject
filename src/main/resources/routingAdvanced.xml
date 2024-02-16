@@ -31,7 +31,6 @@
     <!-- Router -->
     <int:recipient-list-router input-channel="processingChannel">
         <int:recipient channel="serviceActivatorChannel"/>
-        <!-- Add more recipients if necessary -->
     </int:recipient-list-router>
 
     <!-- Service Activator -->

@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS accounts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    number INT NOT NULL,
+    amount DECIMAL(10,2) NOT NULL
+    );
