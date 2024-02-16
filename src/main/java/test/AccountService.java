@@ -1,5 +1,7 @@
 package test;
 
+import org.json.JSONObject;
+
 public class AccountService {
 	
 	public MyAccount myService(MyAccount myAccount){
@@ -13,4 +15,21 @@ public class AccountService {
 		//return myAccount;
 	}
 
+	public MyAccount processJson(String json) {
+		MyAccount myAccount = new MyAccount();
+
+		// Parse the JSON string into a JSONObject
+		JSONObject jsonObj = new JSONObject(json);
+
+		// Extract values from the JSONObject
+		String name = jsonObj.optString("name");
+		int number = jsonObj.optInt("number");
+		int amount = jsonObj.optInt("amount");
+
+		myAccount.setName(name);
+		myAccount.setNumber(number);
+		myAccount.setAmount(amount);
+
+		return myAccount;
+	}
 }

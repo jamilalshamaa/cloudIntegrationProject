@@ -10,8 +10,6 @@
            http://www.springframework.org/schema/integration/file
            http://www.springframework.org/schema/integration/file/spring-integration-file-5.1.xsd">
 
-    <int:channel id="channelEntree"></int:channel>
-
     <int-file:inbound-channel-adapter
             channel="channelEntree"
             directory="dataIn"
@@ -19,12 +17,17 @@
         <int:poller id="poller" fixed-delay="1000" />
     </int-file:inbound-channel-adapter>
 
+    <int:channel id="channelEntree"></int:channel>
 
-    <int-file:file-to-string-transformer input-channel="channelEntree" output-channel="responseChannel"
+    <int-file:file-to-string-transformer input-channel="channelEntree" output-channel="stringChannel"
                                          delete-files="false" charset="UTF-8"/>
 
-    <int:channel id="responseChannel"></int:channel>
+    <int:channel id="stringChannel"></int:channel>
 
-    <int:logging-channel-adapter id="responseChannel" level="INFO"/>
+    <int:filter input-channel="stringChannel" output-channel="channelSortie" expression="payload.equals('nonsense')"/>
+
+    <int:channel id="channelSortie"></int:channel>
+
+    <int:logging-channel-adapter channel="channelSortie" level="INFO"/>
 
 </beans>
