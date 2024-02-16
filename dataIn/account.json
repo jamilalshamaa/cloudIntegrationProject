@@ -1,4 +1,5 @@
-{"name":"Tintin", "number":123, "amount":50},
-
-{"name":"Tintin", "number":123, "amount":50}
-
+{
+  "name":"Jamil",
+  "number":23,
+  "amount":1200
+}

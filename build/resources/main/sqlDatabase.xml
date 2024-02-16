@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:int="http://www.springframework.org/schema/integration"
+       xmlns:int-jdbc="http://www.springframework.org/schema/integration/jdbc"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/integration
+           http://www.springframework.org/schema/integration/spring-integration.xsd
+           http://www.springframework.org/schema/integration/jdbc
+           http://www.springframework.org/schema/integration/jdbc/spring-integration-jdbc.xsd">
+
+    <!-- Define the channel which will be used to send messages to the database -->
+    <int:channel id="jdbcChannel"/>
+
+    <!-- JDBC Outbound Adapter to insert data into the database -->
+    <!-- Corrected Outbound Channel Adapter Configuration without <int-jdbc:parameter> elements -->
+    <int-jdbc:outbound-channel-adapter channel="jdbcChannel"
+                                       data-source="dataSource"
+                                       query="INSERT INTO accounts (name, number, amount) VALUES (:payload.name, :payload.number, :payload.amount)"/>
+
+    <!-- DataSource bean configuration -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.h2.Driver"/>
+        <property name="url" value="jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;INIT=RUNSCRIPT FROM 'classpath:schema.sql'"/>
+        <property name="username" value="sa"/>
+        <property name="password" value=""/>
+    </bean>
+
+    <!-- Logging channel adapter to log the results -->
+    <int:logging-channel-adapter channel="jdbcChannel" level="INFO"/>
+</beans>
